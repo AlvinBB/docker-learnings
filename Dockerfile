@@ -1,5 +1,11 @@
-FROM nginx:latest
-LABEL maintainer "jiangyunbinbb@gmail.com"
-ADD ./build/ /usr/share/nginx/html/
-ADD nginx.conf /etc/nginx/
+FROM node:10.13.0-slim
+RUN apt-get update \
+	&& apt-get install -y nginx
+WORKDIR /app
+COPY . /app/
 EXPOSE 80
+RUN npm install \
+	&& npm run build \
+	&& cp -r ./build/* /var/www/html \
+	&& rm -rf /app
+CMD ["nginx","-g","daemon off;"]
