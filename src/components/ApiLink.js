@@ -15,7 +15,7 @@ export default class ApiLink extends Component {
 			})
 			.then(result => {
 				console.log('result', result);
-				this.apiData = result;
+				this.setState({apiData: result});
 			});
 	}
 	render() {
